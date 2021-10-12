@@ -28,4 +28,4 @@ https://github.com/Mad-hu/ScreenLock.git
 
 ## License
 
-[MIT](LICENSE.md)
+MIT
