@@ -24,7 +24,7 @@ npm run package
 ## Reference
 - https://github.com/Mad-hu/ScreenLock.git
 - https://www.electron.build/configuration/win
-
+- [256icon制作-AnytoIcon-veryhuo](http://www.aha-soft.com/articons/)
 
 ## help
 ### electron-build 参数

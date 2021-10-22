@@ -35,8 +35,9 @@
         "target": [
             "portable",
             "zip"
-        ]
-    } 
+        ],
+        "icon": "asset/images/256.ico"
+    }
   },
   "devDependencies": {
     "electron": "^15.1.2",
