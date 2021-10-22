@@ -22,8 +22,14 @@ npm run package
 ```
 
 ## Reference
+- https://github.com/Mad-hu/ScreenLock.git
+- https://www.electron.build/configuration/win
 
-https://github.com/Mad-hu/ScreenLock.git
+
+## help
+### electron-build 参数
+- portable 便携式应用，而无需安装
+- nsis 安装程序
 
 
 ## License

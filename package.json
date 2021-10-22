@@ -5,7 +5,10 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager . keyboard --win --out build --arch=x64 --version1.0.0 --overwrite --icon=asset/images/128.ico"
+    "package-ia32": "electron-packager . keyboard --platform=win32 --out=build --arch=ia32 --appVersion=1.0.0 --overwrite=true --icon=asset/images/128.ico",
+    "package": "electron-packager . keyboard --platform=win32 --out=build --arch=x64 --appVersion=1.0.0 --overwrite=true --icon=asset/images/128.ico",
+    "dist": "electron-builder --win --x64",
+    "win32": "electron-builder --win --ia32"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -17,6 +20,24 @@
   ],
   "author": "GitHub",
   "license": "MIT",
+  "build": {
+    "appId": "com.phil.keyboard",
+    "copyright": "https://github.com/phil-cheng",
+    "productName": "键盘控制软件",
+    "asar": false,
+    "mac": {
+        "target": [
+            "dmg",
+            "zip"
+        ]
+    },
+    "win": {
+        "target": [
+            "portable",
+            "zip"
+        ]
+    } 
+  },
   "devDependencies": {
     "electron": "^15.1.2",
     "electron-packager": "^15.4.0"
