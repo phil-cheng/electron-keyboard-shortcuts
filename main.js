@@ -7,7 +7,7 @@ const lockScreen = require('./lockScreen.node');
 const storage = require('electron-json-storage');
 storage.setDataPath(path.join(__dirname, 'conf'));
 
-let indexUrl = "http://www.baidu.com";
+let defaultIndexUrl = "http://www.baidu.com";
 
 function createWindow () {
   // 隐藏头部菜单栏
@@ -40,7 +40,7 @@ function createWindow () {
     if(data && data.indexUrl){
       mainWindow.loadURL(data.indexUrl);
     }else{
-      mainWindow.loadURL(indexUrl);
+      mainWindow.loadURL(defaultIndexUrl);
     }
   })
 
@@ -78,7 +78,7 @@ function createWindow () {
 ipcMain.on('asynchronous-message-change-index', (event, arg) => {
   storage.get('user_json',function(error, data){
     if(error) { 
-      mainWindow.loadURL(indexUrl); 
+      mainWindow.loadURL(defaultIndexUrl); 
     }
     if(data && data.indexUrl){
       mainWindow.loadURL(data.indexUrl);

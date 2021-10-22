@@ -5,9 +5,13 @@
 // selectively enable features needed in the rendering
 // process.
 
-// window.onload=function(){
-//   window.location.href="https://www.baidu.com";
-// }
+window.onload = function(){
+  window.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      updateUrl();
+    }
+  }, true);
+}
 
 function updateUrl(){
   let errorNotice = document.getElementById("errorNotice");
