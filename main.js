@@ -1,9 +1,14 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, Menu, MenuItem, globalShortcut} = require('electron')
+const {app, BrowserWindow, Menu, globalShortcut, ipcMain} = require('electron')
 const path = require('path')
 const lockScreen = require('./lockScreen.node');
-console.log(lockScreen);
 
+// 存储位置
+const os = require('os');
+const storage = require('electron-json-storage');
+storage.setDataPath(os.tmpdir());
+
+let indexUrl = "http://www.baidu.com";
 
 function createWindow () {
   // 隐藏头部菜单栏
@@ -16,51 +21,51 @@ function createWindow () {
     frame: false, // 无边框窗口，隐藏顶部栏（最小、最大、关闭）栏
     alwaysOnTop: true, // 窗口是否永远在别的窗口的上面
     fullscreen: true, // 全屏展示
-    show: false,
+    //show: false,
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     }
   })
 
   // 加载完页面再显示
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
-  })
-
-  // 屏蔽系统热键
-  // mainWindow.webContents.on("before-input-event", (event, input) => {
-  //   let ignoreShortcutsFlag = false;
-  //   // Alt + F4（可以控制）
-  //   if(input.key === "F4" && input.alt){
-  //     ignoreShortcutsFlag = true;
-  //   }
-  //   // ctrl + alt + delete（控制不住）
-  //   if(input.key === "Delete" && input.alt && input.control){
-  //     ignoreShortcutsFlag = true;
-  //   }
-
-  //   if(ignoreShortcutsFlag){
-  //     event.preventDefault();
-  //   }
-  //   mainWindow.webContents.setIgnoreMenuShortcuts(ignoreShortcutsFlag);
+  // mainWindow.once('ready-to-show', () => {
+  //   mainWindow.show()
   // })
 
+  // and load the index.html of the app.
+  // mainWindow.loadFile('index.html')
+  storage.get("user_json",function(error, data){
+    if(error) throw error;
+    if(data && data.indexUrl){
+      mainWindow.loadURL(data.indexUrl);
+    }else{
+      mainWindow.loadURL(indexUrl);
+    }
+  })
+
   // 全局热键(关闭快捷键)
-  const ret = globalShortcut.register('Ctrl + Alt + Shift + Z', () => {
-    console.log('Ctrl + Alt + Shift + Z is pressed');
+  // 退出
+  globalShortcut.register('Ctrl + Alt + Shift + Z', () => {
     lockScreen.unlock();
     if (process.platform !== 'darwin') app.quit();
   })
-  console.log("register:" + ret );
- 
-  // and load the index.html of the app.
-  // mainWindow.loadFile('index.html')
-  mainWindow.loadURL("https://www.baidu.com");
-  
+  // 打开调试窗口
+  globalShortcut.register('Ctrl + Shift + I', () => {
+    console.log("i got it");
+    mainWindow.webContents.openDevTools();
+  })
+  // 修改访问地址
+  globalShortcut.register('Ctrl + Shift + P', () => {
+    console.log("i got it");
+     mainWindow.loadFile("index.html");
+  })
+
   // 锁屏
   setTimeout(()=>{
     lockScreen.lock();
-  },2000);
+  },1000);
 
   // 霸占窗口
   setInterval(() => {
@@ -68,6 +73,19 @@ function createWindow () {
       mainWindow.focus();
     }
   }, 300);
+
+  
+// 绑定首页切换通知
+ipcMain.on('asynchronous-message-change-index', (event, arg) => {
+  storage.get('user_json',function(error, data){
+    if(error) { 
+      mainWindow.loadURL(indexUrl); 
+    }
+    if(data && data.indexUrl){
+      mainWindow.loadURL(data.indexUrl);
+    }
+  })
+})
   
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

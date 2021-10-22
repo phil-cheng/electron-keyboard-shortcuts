@@ -3,15 +3,26 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
     <link href="./styles.css" rel="stylesheet">
-    <title>Hello World!</title>
+    <title>参数配置!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h3>当前运行环境：</h3>
     We are using Node.js <span id="node-version"></span>,
     Chromium <span id="chrome-version"></span>,
     and Electron <span id="electron-version"></span>.
+    <br>
+    <h3>参数修改：</h3>
+    <span>请输入一个有效的访问地址,作为首次访问地址：</spn>
+    <input id="indexUrl" type="text" />
+    <button onclick="updateUrl()">确认修改</button>
+    <br>
+    <span style="font-size: 12px; color:red" id="errorNotice"></span>
+    <br>
+    <br>
+    <br>
+    <a href="javascript:;" onclick="goIndex()">返回</a>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
