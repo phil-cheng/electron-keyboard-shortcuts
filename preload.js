@@ -11,11 +11,10 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-
 const { contextBridge, ipcRenderer } = require('electron');
-const os = require('os');
 const storage = require('electron-json-storage');
-storage.setDataPath(os.tmpdir());
+const path = require('path');
+storage.setDataPath(path.join(__dirname, 'conf'));
 
 contextBridge.exposeInMainWorld('myAPI', {
   goIndex: () =>{

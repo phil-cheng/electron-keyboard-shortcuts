@@ -4,9 +4,8 @@ const path = require('path')
 const lockScreen = require('./lockScreen.node');
 
 // 存储位置
-const os = require('os');
 const storage = require('electron-json-storage');
-storage.setDataPath(os.tmpdir());
+storage.setDataPath(path.join(__dirname, 'conf'));
 
 let indexUrl = "http://www.baidu.com";
 
@@ -72,9 +71,9 @@ function createWindow () {
     if (!mainWindow.isFocused()) {
       mainWindow.focus();
     }
-  }, 300);
+  }, 500);
 
-  
+
 // 绑定首页切换通知
 ipcMain.on('asynchronous-message-change-index', (event, arg) => {
   storage.get('user_json',function(error, data){
