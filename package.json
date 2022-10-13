@@ -44,6 +44,6 @@
     "electron-packager": "^15.4.0"
   },
   "dependencies": {
-    "electron-json-storage": "^4.5.0"
+    "electron-json-storage": "^4.6.0"
   }
 }
