@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "electron": "^15.1.2",
-    "electron-packager": "^15.4.0"
+    "electron-packager": "^17.0.0"
   },
   "dependencies": {
     "electron-json-storage": "^4.5.0"
